@@ -20,7 +20,13 @@ Vagrant.configure("2") do |config|
   config.vm.network(:forwarded_port, guest: port3, host: port3)
   config.vm.network(:forwarded_port, guest: port4, host: port4)
 
-  config.vm.provision :shell,
-    path: "bootstrap.sh",
-    run: "always"
+  config.vm.provision "shell",
+    path: "bootstrap.sh"
+	
+  config.vm.provision "shell",
+    path: "postgres.sh"
+	
+  config.vm.provision "shell",
+    path: "startup.sh",
+	run: "always"
 end
