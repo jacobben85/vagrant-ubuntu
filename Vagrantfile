@@ -10,9 +10,15 @@ Vagrant.configure("2") do |config|
     v.cpus = 2
   end
   
-  port1 = 8080
+  port1 = 9443
+  port2 = 8280
+  port3 = 8643
+  port4 = 8205
 
   config.vm.network(:forwarded_port, guest: port1, host: port1)
+  config.vm.network(:forwarded_port, guest: port2, host: port2)
+  config.vm.network(:forwarded_port, guest: port3, host: port3)
+  config.vm.network(:forwarded_port, guest: port4, host: port4)
 
   config.vm.provision :shell,
     path: "bootstrap.sh",
