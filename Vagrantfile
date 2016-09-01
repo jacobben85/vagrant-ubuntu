@@ -15,18 +15,23 @@ Vagrant.configure("2") do |config|
   port3 = 8643
   port4 = 8205
   port5 = 5432
+  port6 = 8080
 
   config.vm.network(:forwarded_port, guest: port1, host: port1)
   config.vm.network(:forwarded_port, guest: port2, host: port2)
   config.vm.network(:forwarded_port, guest: port3, host: port3)
   config.vm.network(:forwarded_port, guest: port4, host: port4)
-  config.vm.network(:forwarded_port, guest: port5, host: 5432)
+  config.vm.network(:forwarded_port, guest: port5, host: port5)
+  config.vm.network(:forwarded_port, guest: port6, host: port6)
 
   config.vm.provision "shell",
     path: "bootstrap.sh"
 	
   config.vm.provision "shell",
     path: "postgres.sh"
+
+  config.vm.provision "shell",
+    path: "wildfly.sh"
 	
   config.vm.provision "shell",
     path: "startup.sh",

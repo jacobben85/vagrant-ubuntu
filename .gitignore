@@ -1,3 +1,5 @@
 aps/*
 .vagrant
 dynamic-forms-jndi
+**/*.war
+.DS_Store

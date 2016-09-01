@@ -13,4 +13,5 @@ apt-get install -y oracle-java8-set-default -qq
 echo "Java 8 installation complete"
 
 apt-get --assume-yes update -qq
-apt-get install -y htop -qqs
+apt-get install -y htop -qq
+apt-get install -y maven -qq
