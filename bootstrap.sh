@@ -15,3 +15,4 @@ echo "Java 8 installation complete"
 apt-get --assume-yes update -qq
 apt-get install -y htop -qq
 apt-get install -y maven -qq
+apt-get install -y nmap -qq
