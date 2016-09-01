@@ -50,42 +50,10 @@ service wildfly start
 #waiting for boot
 while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting for wildfly... ; sleep 1; done
 
-#deploy all projects found in deploy/
-# for proj_war in $conf_folder/deploy/*.war; do
-#   echo "deplying $proj_war"
-#   /opt/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
-# done
-
-#    <xa-datasource
-#            jndi-name="java:jboss/datasources/authority_admin_wirs"
-#            pool-name="authority_admin_wirs"
-#            enabled="true">
-#        <xa-datasource-property name="url">jdbc:postgresql://localhost:5432/vagrant</xa-datasource-property>
-#        <driver>postgres</driver>
-#        <xa-pool>
-#            <min-pool-size>10</min-pool-size>
-#            <max-pool-size>20</max-pool-size>
-#            <prefill>true</prefill>
-#        </xa-pool>
-#        <security>
-#            <user-name>vagrant</user-name>
-#            <password>vagrant</password>
-#        </security>
-#    </xa-datasource>
-#    <drivers>
-#        <driver name="postgres" module="org.postgresql">
-#            <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
-#        </driver>
-#    </drivers>
+deploy all projects found in deploy/
+ for proj_war in $conf_folder/deploy/*.war; do
+   echo "deplying $proj_war"
+   /opt/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
+ done
 
 # https://developer.jboss.org/blogs/amartin-blog/2012/02/08/how-to-set-up-a-postgresql-jdbc-driver-on-jboss-7
-#<?xml version="1.0" encoding="UTF-8"?>
-#<module xmlns="urn:jboss:module:1.0" name="org.postgresql">
-# <resources>
-# <resource-root path="postgresql-9.3-1103.jdbc4.jar"/>
-# </resources>
-# <dependencies>
-# <module name="javax.api"/>
-# <module name="javax.transaction.api"/>
-# </dependencies>
-#</module>
