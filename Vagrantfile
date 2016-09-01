@@ -27,11 +27,12 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell",
     path: "bootstrap.sh"
 	
-  config.vm.provision "shell",
-    path: "postgres.sh"
+  # config.vm.provision "shell",
+  #   path: "postgres.sh"
 
   config.vm.provision "shell",
-    path: "wildfly.sh"
+    path: "wildfly.sh",
+    args: "/vagrant"
 	
   config.vm.provision "shell",
     path: "startup.sh",

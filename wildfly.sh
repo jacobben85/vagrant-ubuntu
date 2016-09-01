@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# reference http://developer-should-know.com/post/134394533957/how-to-install-wildfly-on-ubuntu
+
 conf_folder=$1
 
 function print_help() {
@@ -17,35 +19,33 @@ apt-get install -y vim
 
 #install wildfly
 cd /tmp
-wget http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.tar.gz
-cd /usr/local/
-tar xfz /tmp/wildfly-9.0.2.Final.tar.gz
-mv wildfly-9.0.2.Final wildfly
-rm /tmp/wildfly-9.0.2.Final.tar.gz
+wget http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.zip
+unzip wildfly-9.0.2.Final.zip -d /opt/
+ln -s /opt/wildfly-9.0.2.Final /opt/wildfly
+cp $conf_folder/wildfly-conf/wilfly.conf /etc/default/wildfly
 
-#copy wildfy configuration
-cd /usr/local
-cp $conf_folder/wildfly-conf/wildfly-start.sh $conf_folder/wildfly-conf/standalone.conf wildfly/bin/
+cp /opt/wildfly/bin/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
+chown root:root /etc/init.d/wildfly
+chmod +X /etc/init.d/wildfly
 
-#setup wildfly user
-useradd -d /home/wildfly -m -s/bin/sh -U -u 2000 wildfly
-chown -R wildfly.wildfly wildfly/standalone
+sudo update-rc.d wildfly defaults
+sudo update-rc.d wildfly enable
 
-#setup log folder
-mkdir /var/log/wildfly && \
-  chown wildfly.wildfly /var/log/wildfly
+sudo mkdir -p /var/log/wildfly
 
-#setup wildfly as a service
-cp $conf_folder/wildfly-conf/wildfly.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable wildfly.service
-systemctl start wildfly.service
+sudo useradd --system --shell /bin/false wildfly
+
+sudo chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
+sudo chown -R wildfly:wildfly /opt/wildfly
+sudo chown -R wildfly:wildfly /var/log/wildfly
+
+sudo service wildfly start
 
 #waiting for boot
-while ! /usr/local/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting for wildfly... ; sleep 1; done
+while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting for wildfly... ; sleep 1; done
 
 #deploy all projects found in deploy/
-for proj_war in $conf_folder/deploy/*.war; do
-  echo "deplying $proj_war"
-  /usr/local/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
-done
+# for proj_war in $conf_folder/deploy/*.war; do
+#   echo "deplying $proj_war"
+#   /opt/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
+# done
