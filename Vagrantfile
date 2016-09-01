@@ -14,11 +14,13 @@ Vagrant.configure("2") do |config|
   port2 = 8280
   port3 = 8643
   port4 = 8205
+  port5 = 5432
 
   config.vm.network(:forwarded_port, guest: port1, host: port1)
   config.vm.network(:forwarded_port, guest: port2, host: port2)
   config.vm.network(:forwarded_port, guest: port3, host: port3)
   config.vm.network(:forwarded_port, guest: port4, host: port4)
+  config.vm.network(:forwarded_port, guest: port5, host: 5432)
 
   config.vm.provision "shell",
     path: "bootstrap.sh"
