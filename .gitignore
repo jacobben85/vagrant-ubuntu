@@ -3,3 +3,4 @@ aps/*
 dynamic-forms-jndi
 **/*.war
 .DS_Store
+.idea

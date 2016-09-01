@@ -22,7 +22,7 @@ cd /tmp
 wget http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.zip
 unzip wildfly-9.0.2.Final.zip -d /opt/
 ln -s /opt/wildfly-9.0.2.Final /opt/wildfly
-cp $conf_folder/wildfly-conf/wilfly.conf /etc/default/wildfly
+cp $conf_folder/wildfly-conf/wildfly.conf /etc/default/wildfly
 
 cp /opt/wildfly/bin/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
 chown root:root /etc/init.d/wildfly
