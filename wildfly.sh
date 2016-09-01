@@ -38,16 +38,15 @@ mkdir -p /var/log/wildfly
 
 useradd --system --shell /bin/false wildfly
 
-chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
-chown -R wildfly:wildfly /opt/wildfly
-chown -R wildfly:wildfly /var/log/wildfly
-
 mkdir -p /opt/wildfly/modules/org/postgresql/main
 cp $conf_folder/wildfly-conf/postgresql-9.3-1103.jdbc4.jar /opt/wildfly/modules/org/postgresql/main
 cp $conf_folder/wildfly-conf/module.xml /opt/wildfly/modules/org/postgresql/main
 
-mv /opt/wildfly/standalone/configuration/standalone.xml /opt/wildfly/standalone/configuration/standalone-old.xml
-cp $conf_folder/wildfly-conf/standalone.xml /opt/wildfly/standalone/configuration/standalone.xml
+#mv /opt/wildfly/standalone/configuration/standalone.xml /opt/wildfly/standalone/configuration/standalone-old.xml
+#cp $conf_folder/wildfly-conf/standalone.xml /opt/wildfly/standalone/configuration/standalone.xml
+chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
+chown -R wildfly:wildfly /var/log/wildfly
+chown -R wildfly:wildfly /opt/wildfly
 
 service wildfly start
 
@@ -58,5 +57,9 @@ while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting 
    echo "deploying $proj_war"
    /opt/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
  done
+
+sudo -u postgres bash -c "psql -f $conf_folder/dynamic-forms-jndi/schema.sql"
+sudo -u postgres bash -c "psql -f $conf_folder/dynamic-forms-jndi/data.sql"
+sudo -u postgres bash -c "psql -f $conf_folder/dynamic-forms-jndi/new-modifications-3-24-16.sql"
 
 # https://developer.jboss.org/blogs/amartin-blog/2012/02/08/how-to-set-up-a-postgresql-jdbc-driver-on-jboss-7

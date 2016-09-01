@@ -441,10 +441,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-
-    <deployments>
-        <deployment name="authority_admin_wirs.war" runtime-name="authority_admin_wirs.war">
-            <content sha1="ec4818be99853356891b7b5b7acc20d657c30a97"/>
-        </deployment>
-    </deployments>
 </server>
