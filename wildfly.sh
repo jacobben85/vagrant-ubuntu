@@ -30,18 +30,22 @@ cp /opt/wildfly/bin/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
 chown root:root /etc/init.d/wildfly
 chmod +X /etc/init.d/wildfly
 
-sudo update-rc.d wildfly defaults
-sudo update-rc.d wildfly enable
+update-rc.d wildfly defaults
+update-rc.d wildfly enable
 
-sudo mkdir -p /var/log/wildfly
+mkdir -p /var/log/wildfly
 
-sudo useradd --system --shell /bin/false wildfly
+useradd --system --shell /bin/false wildfly
 
-sudo chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
-sudo chown -R wildfly:wildfly /opt/wildfly
-sudo chown -R wildfly:wildfly /var/log/wildfly
+chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
+chown -R wildfly:wildfly /opt/wildfly
+chown -R wildfly:wildfly /var/log/wildfly
 
-sudo service wildfly start
+mkdir -p /opt/wildfly/modules/org/postgresql/main
+cp $conf_folder/wildfly-conf/postgresql-9.3-1103.jdbc4.jar /opt/wildfly/modules/org/postgresql/main
+cp $conf_folder/wildfly-conf/module.xml /opt/wildfly/modules/org/postgresql/main
+
+service wildfly start
 
 #waiting for boot
 while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting for wildfly... ; sleep 1; done
