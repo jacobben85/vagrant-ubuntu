@@ -24,7 +24,7 @@ unzip wildfly-9.0.2.Final.zip -d /opt/
 ln -s /opt/wildfly-9.0.2.Final /opt/wildfly
 cp $conf_folder/wildfly-conf/wildfly.conf /etc/default/wildfly
 
-echo "JAVA_OPTS='\$JAVA_OPTS -Djboss.bind.address=0.0.0.0'" >> /opt/wildfly/bin/standalone.conf
+echo "JAVA_OPTS=\"\$JAVA_OPTS -Djboss.bind.address=0.0.0.0\"" >> /opt/wildfly/bin/standalone.conf
 
 cp /opt/wildfly/bin/init.d/wildfly-init-debian.sh /etc/init.d/wildfly
 chown root:root /etc/init.d/wildfly
@@ -75,3 +75,13 @@ while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting 
 #    </drivers>
 
 # https://developer.jboss.org/blogs/amartin-blog/2012/02/08/how-to-set-up-a-postgresql-jdbc-driver-on-jboss-7
+#<?xml version="1.0" encoding="UTF-8"?>
+#<module xmlns="urn:jboss:module:1.0" name="org.postgresql">
+# <resources>
+# <resource-root path="postgresql-9.3-1103.jdbc4.jar"/>
+# </resources>
+# <dependencies>
+# <module name="javax.api"/>
+# <module name="javax.transaction.api"/>
+# </dependencies>
+#</module>
