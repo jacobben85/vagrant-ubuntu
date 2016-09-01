@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Setting up Wildfly"
 # reference http://developer-should-know.com/post/134394533957/how-to-install-wildfly-on-ubuntu
 
 conf_folder=$1
@@ -45,14 +46,16 @@ mkdir -p /opt/wildfly/modules/org/postgresql/main
 cp $conf_folder/wildfly-conf/postgresql-9.3-1103.jdbc4.jar /opt/wildfly/modules/org/postgresql/main
 cp $conf_folder/wildfly-conf/module.xml /opt/wildfly/modules/org/postgresql/main
 
+mv /opt/wildfly/standalone/configuration/standalone.xml /opt/wildfly/standalone/configuration/standalone-old.xml
+cp $conf_folder/wildfly-conf/standalone.xml /opt/wildfly/standalone/configuration/standalone.xml
+
 service wildfly start
 
 #waiting for boot
 while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting for wildfly... ; sleep 1; done
 
-deploy all projects found in deploy/
  for proj_war in $conf_folder/deploy/*.war; do
-   echo "deplying $proj_war"
+   echo "deploying $proj_war"
    /opt/wildfly/bin/jboss-cli.sh -c "deploy $proj_war"
  done
 
