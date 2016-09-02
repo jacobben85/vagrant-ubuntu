@@ -24,6 +24,4 @@ echo "client_encoding = utf8" >> "$PG_CONF"
 service postgresql reload
 service postgresql restart
 
-# apt-get --assume-yes install postgres-xc-client -qq
-
 echo "Postgres setup complete"
