@@ -60,4 +60,6 @@ while ! /opt/wildfly/bin/jboss-cli.sh -c "ls" 2>&1 >/dev/null ; do echo Waiting 
 
 sudo -u postgres bash -c "psql vagrant -f $conf_folder/dynamic-forms-jndi/table.sql"
 
+curl -X POST --header "Accept: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -d @$conf_folder/dynamic-forms-jndi/agreement-excels/updated/Authority.xlsx http://localhost:8080/authority_admin_wirs/uploadAgreement
+
 # https://developer.jboss.org/blogs/amartin-blog/2012/02/08/how-to-set-up-a-postgresql-jdbc-driver-on-jboss-7
