@@ -17,4 +17,4 @@ apt-get install -y htop
 apt-get install -y maven
 apt-get install -y nmap
 
-unzip -o /vagrant/aps/aps-express-edition-6.1.3-1.0.zip -d /vagrant/aps/aps-express-edition
+unzip -o /vagrant/aps/aps-express-edition-5.3.6-1.0.zip -d /vagrant/aps/aps-express-edition
