@@ -18,3 +18,4 @@ apt-get install -y maven
 apt-get install -y nmap
 
 unzip -o /vagrant/aps/aps-express-edition-5.3.6-1.0.zip -d /vagrant/aps/aps-express-edition
+cp /vagrant/wildfly-conf/postgresql-9.3-1103.jdbc4.jar /vagrant/aps/aps-express-edition/server/asm-pdp-app-tomcat7/shared/
