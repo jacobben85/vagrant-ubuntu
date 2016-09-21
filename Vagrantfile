@@ -5,7 +5,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "private_network", ip: "192.168.56.103"
   config.vm.hostname = "ecfd.vagrant-local.jbj"
-  
+  config.vm.box_check_update = false
+
   config.vm.provider "virtualbox" do |v|
     v.memory = 3072
     v.cpus = 2
